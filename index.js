@@ -21,11 +21,13 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors({
-    origin : `${BASE_URL}`,
-    credentials : true,
+app.use(
+  cors({
+    origin: "https://stayhub25.netlify.app",
+    credentials: true,
     optionsSuccessStatus: 200,
-}))  
+  })
+);  
 
 // Enable CORS for a specific origin (e.g., your Netlify app)
 app.use((req, res, next) => {
