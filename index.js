@@ -14,6 +14,8 @@ const PhotoRelatedRoutes = require('./routes/PhotosRel');
 
 const BASE_URL = process.env.BASE_URL;
 
+const PORT = process.env.PORT || 4000
+
 
 const app = express();
 
@@ -193,4 +195,4 @@ app.use('/places' , PlaceRelatedRoutes);
 // app.use()
 
   
-app.listen(4100);    
+app.listen(PORT);    
