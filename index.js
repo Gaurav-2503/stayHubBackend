@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://stayhub25.netlify.app",
+    origin: "https://fluffy-conkies-f278b7.netlify.app",
     credentials: true,
     optionsSuccessStatus: 200,
   })
@@ -33,7 +33,7 @@ app.use(
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://stayhub25.netlify.app"
+    "https://fluffy-conkies-f278b7.netlify.app/"
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
