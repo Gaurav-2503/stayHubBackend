@@ -27,6 +27,15 @@ app.use(cors({
     optionsSuccessStatus: 200,
 }))  
 
+// Enable CORS for a specific origin (e.g., your Netlify app)
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://stayhub25.netlify.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 app.use(cookieParser())
 
 
