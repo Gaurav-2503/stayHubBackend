@@ -14,7 +14,7 @@ const PhotoRelatedRoutes = require('./routes/PhotosRel');
 
 const BASE_URL = process.env.BASE_URL;
 
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 4100
 
 
 const app = express();
@@ -41,7 +41,7 @@ app.use(
 app.use((req, res, next) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://fluffy-conkies-f278b7.netlify.app"
+    'https://stayhub-143.netlify.app'
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
