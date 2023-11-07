@@ -63,7 +63,7 @@ exports.loginUser = async (req , res) => {
         const userPresent = await User.findOne({email});
          
         if(userPresent) {
-            console.log("User finded");
+            // console.log("User finded");
             const passOk = bcrypt.compareSync(password , userPresent.password);
             if(passOk){
 

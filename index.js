@@ -23,11 +23,19 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "https://fluffy-conkies-f278b7.netlify.app",
+    origin: `${BASE_URL}`,
     credentials: true,
     optionsSuccessStatus: 200,
   })
 );  
+
+// app.use(
+//   cors({
+//     origin: 'http://localhost:5173',
+//     credentials: true,
+//     optionsSuccessStatus: 200,
+//   })
+// );  
 
 // Enable CORS for a specific origin (e.g., your Netlify app)
 app.use((req, res, next) => {
@@ -140,24 +148,24 @@ app.post('/bookplace' , async  (req , res) => {
                     }
   
                     const {
-                    place,
-                    checkIn,
-                    checkOut,
-                    nameOfUser,
-                    numGuests,
-                    phone,
-                    price,
+                        place,
+                        checkIn,
+                        checkOut,
+                        nameOfUser,
+                        numGuests,
+                        phone,
+                        price,
                     } = req.body;
     
                     const doc = await Booking.create({
-                    place,
-                    user : tokendata.id,
-                    checkIn,
-                    checkOut,
-                    nameOfUser,
-                    numGuests,
-                    phone,
-                    price,
+                        place,
+                        user : tokendata.id,
+                        checkIn,
+                        checkOut,
+                        nameOfUser,
+                        numGuests,
+                        phone,
+                        price,
                     });
  
                     // console.log(doc.place);
@@ -166,6 +174,7 @@ app.post('/bookplace' , async  (req , res) => {
                 }) 
             }
             else {
+                console.log("Token is not available");
                 res.status(401).json("Login or register");
             }
 
@@ -185,17 +194,18 @@ app.get('/bookings' , (req , res) => {
 
     const {token} = req.cookies;
 
-    jwt.verify(token , jwtSecrectKey , {} , async (err , tokendata) => {
+    if(token) {
+        jwt.verify(token, jwtSecrectKey, {}, async (err, tokendata) => {
+          if (err) throw err;
 
-        if(err) throw err;
+          res.json(
+            await Booking.find({ user: tokendata.id }).populate("place")
+          );
+        });
 
-        res.json(
-          await Booking.find({ user: tokendata.id }).populate("place")
-        );
-
-    })
-
-
+    }else {
+        console.log("Token is not available");
+    }
 
 })
      
@@ -211,4 +221,5 @@ app.use('/places' , PlaceRelatedRoutes);
 // app.use()
 
   
+// app.listen(4100);    
 app.listen(PORT);    
