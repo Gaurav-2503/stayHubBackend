@@ -21,13 +21,13 @@ const app = express();
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: `${BASE_URL}`,
-    credentials: true,
-    optionsSuccessStatus: 200,
-  })
-);  
+// app.use(
+//   cors({
+//     origin: "https://stayhub-143.netlify.app",
+//     credentials: true,
+//     optionsSuccessStatus: 200,
+//   })
+// );  
 
 // app.use(
 //   cors({
@@ -39,9 +39,7 @@ app.use(
 
 // Enable CORS for a specific origin (e.g., your Netlify app)
 app.use((req, res, next) => {
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    'https://stayhub-143.netlify.app'
+  res.setHeader("Access-Control-Allow-Origin", "https://stayhub-143.netlify.app"
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
