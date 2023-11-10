@@ -130,7 +130,7 @@ exports.logoutUser = (req , res) => {
       res.clearCookie("token");
 
       // Redirect the user to the login or home page
-      res.redirect("/"); // Replace with the appropriate route
+      res.redirect("/places"); // Replace with the appropriate route
 
       res.json(true);
     }catch(e) {
