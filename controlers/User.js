@@ -93,7 +93,7 @@ exports.loginUser = async (req , res) => {
                       path: "/",
                       secure: true,
                       httpOnly: true,
-                      sameSite: "None",
+                    //   sameSite: "None",
                     });
 
                     if(token){
@@ -128,14 +128,21 @@ exports.logoutUser = (req , res) => {
 
     try{
 
-      res.clearCookie("token", {
-        domain: "stayhub-backend3.onrender.com",
-        path: "/",
-        value : ' '
-      });
+    //   res.clearCookie('token', {
+    //     domain: "stayhub-backend3.onrender.com",
+    //     path: '/',
+    //   });
+
+
+      res.cookie('token', ' ');
         
+      
+        const { token } = req.cookies;
+        console.log(token);
       // Redirect the user to the login or home page
       res.redirect("/places"); // Replace with the appropriate route
+
+      res.json(true);
 
     //   res.json(true);
     }catch(e) {
