@@ -71,7 +71,7 @@ exports.loginUser = async (req , res) => {
 
                 jwt.sign({email : userPresent.email , 
                     id : userPresent._id
-                } , jwtSecrectKey , {} , (err , token) => {
+                } , jwtSecrectKey , { expiresIn: '1h' } , (err , token) => {
 
                     if (err) {
                       console.error(err);
@@ -93,9 +93,14 @@ exports.loginUser = async (req , res) => {
                       path: "/",
                       secure: true,
                       httpOnly: true,
+                      sameSite: "None",
                     });
 
-                    console.log(token);
+                    if(token){
+                        console.log(token);
+                    }else{
+                        console.log('No Token');
+                    }
                      res.json(userLoggedIn);
 
                     //  console.log(userLoggedIn)
