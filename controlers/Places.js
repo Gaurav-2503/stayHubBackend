@@ -3,106 +3,125 @@ const jwt = require("jsonwebtoken");
 
 const jwtSecrectKey = process.env.JWT_SECRET_KEY;
 
-exports.getAllPlaces = async (req , res) => {
-
+exports.getAllPlaces = async (req, res) => {
+  try {
     res.json(await Place.find());
-
-}
-
-
-exports.getUserPlaces = async (req , res) => {
-    const {token} = req.cookies;
-
-    jwt.verify(token , jwtSecrectKey , {} , async (err , tokenData) => {
-
-        const {id} = tokenData;
-
-        res.json(await Place.find({owner : id}))
-
-    });
-
+  } catch (e) {
+    throw e;
+  }
 };
 
+exports.getUserPlaces = async (req, res) => {
+  try {
+    const { token } = req.cookies;
 
-exports.createPlace = async (req , res) => {
+    jwt.verify(token, jwtSecrectKey, {}, async (err, tokenData) => {
+      const { id } = tokenData;
 
-    const {token} = req.cookies;
-
-    const {title , address , addedPhotos ,
-        description , perks , extraInfo ,
-        checkIn , checkOut , maxGuests , price
-    } = req.body;
- 
-    jwt.verify(token , jwtSecrectKey , {} , async (err , tokenData) => {
-        if(err) throw err;
-  
-        const placeAdded = await Place.create({
-
-            owner : tokenData.id,
-            title , 
-            address , 
-            photos:addedPhotos ,
-            description , 
-            perks , 
-            extraInfo ,
-            checkIn , 
-            checkOut , 
-            maxGuests ,
-            price 
-        })  
-         
-        res.json(placeAdded);
+      res.json(await Place.find({ owner: id }));
     });
- 
-}
+  } catch (e) {
+    throw e;
+  }
+};
 
-exports.getPlaceById = async (req , res) => {
+exports.createPlace = async (req, res) => {
+  try {
+    const { token } = req.cookies;
 
-    const {id} = req.params;
+    const {
+      title,
+      address,
+      addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+      price,
+    } = req.body;
+
+    jwt.verify(token, jwtSecrectKey, {}, async (err, tokenData) => {
+      if (err) throw err;
+
+      const placeAdded = await Place.create({
+        owner: tokenData.id,
+        title,
+        address,
+        photos: addedPhotos,
+        description,
+        perks,
+        extraInfo,
+        checkIn,
+        checkOut,
+        maxGuests,
+        price,
+      });
+
+      res.json(placeAdded);
+    });
+  } catch (e) {
+    throw e;
+  }
+};
+
+exports.getPlaceById = async (req, res) => {
+  try {
+    const { id } = req.params;
 
     res.json(await Place.findById(id));
+  } catch (e) {
+    throw e;
+  }
+};
 
-}
+exports.updatePlace = async (req, res) => {
+  try {
+    const { token } = req.cookies;
 
-exports.updatePlace = async (req , res) => {
+    const {
+      id,
+      title,
+      address,
+      addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+      price,
+    } = req.body;
 
-    const {token} = req.cookies;
+    jwt.verify(token, jwtSecrectKey, {}, async (err, tokenData) => {
+      if (err) throw err;
 
-    const {id , title , address , addedPhotos ,
-        description , perks , extraInfo ,
-        checkIn , checkOut , maxGuests , 
-        price 
-    } = req.body;  
-  
-  
-    jwt.verify(token , jwtSecrectKey , {} , async (err , tokenData) => {
+      const placeAdded = await Place.findById(id);
 
-        if(err) throw err;
+      // placeAdded.owner gives object id and tokenData.id is string , comparision can't happen .
+      // Therefore converting object id to string
 
-        const placeAdded = await Place.findById(id); 
+      if (tokenData.id === placeAdded.owner.toString()) {
+        // we can update
 
-        // placeAdded.owner gives object id and tokenData.id is string , comparision can't happen .
-        // Therefore converting object id to string
-
-        if(tokenData.id === placeAdded.owner.toString() ){
-            // we can update          
-
-            placeAdded.set({
-
-                title , 
-                address , 
-                photos:addedPhotos ,
-                description , 
-                perks , 
-                extraInfo ,
-                checkIn , 
-                checkOut , 
-                maxGuests ,
-                price
-            })
-            await  placeAdded.save()
-            res.json('ok');
-        }
-    }); 
-    
-}
+        placeAdded.set({
+          title,
+          address,
+          photos: addedPhotos,
+          description,
+          perks,
+          extraInfo,
+          checkIn,
+          checkOut,
+          maxGuests,
+          price,
+        });
+        await placeAdded.save();
+        res.json("ok");
+      }
+    });
+  } catch (e) {
+    throw e;
+  }
+};
