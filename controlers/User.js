@@ -89,7 +89,7 @@ exports.loginUser = async (req , res) => {
                     // res.cookie('token' , token).json(userLoggedIn);
                     
                     res.cookie("token", token, {
-                      domain: "stayhub-143.netlify.app",
+                      domain: "stayhub-backend3.onrender.com",
                       path: "/",
                       secure: true,
                       httpOnly: true,
