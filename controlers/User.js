@@ -127,8 +127,7 @@ exports.logoutUser = (req , res) => {
     // just reset the cookie
 
     try{
-      res.clearCookie('token');
-      
+              
       res.clearCookie("token", {
         domain: "stayhub-backend3.onrender.com",
         path: "/",
