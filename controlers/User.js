@@ -127,12 +127,12 @@ exports.logoutUser = (req , res) => {
     // just reset the cookie
 
     try{
-      res.clearCookie("token");
+      res.clearCookie('token');
 
       // Redirect the user to the login or home page
       res.redirect("/places"); // Replace with the appropriate route
 
-      res.json(true);
+    //   res.json(true);
     }catch(e) {
         throw e;
     }
