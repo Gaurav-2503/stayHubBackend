@@ -130,24 +130,26 @@ exports.logoutUser = (req , res) => {
     // just reset the cookie
 
     try{
+      //   res.clearCookie('token', {
+      //     domain: "stayhub-backend3.onrender.com",
+      //     path: '/',
+      //   });
 
-    //   res.clearCookie('token', {
-    //     domain: "stayhub-backend3.onrender.com",
-    //     path: '/',
-    //   });
+      // Clear the refresh token cookie (if you have one)
+      res.clearCookie("token", {
+        domain: "stayhub-backend3.onrender.com",
+        path: "/",
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+      });
 
-
-      res.cookie('token', ' ');
-        
+      // Redirect the user to the home page or login page
       
-        const { token } = req.cookies;
-        // console.log(token);
-      // Redirect the user to the login or home page
-      res.redirect("/places"); // Replace with the appropriate route
-
       res.json(true);
+      res.redirect("/");
 
-    //   res.json(true);
+      //   res.json(true);
     }catch(e) {
         throw e;
     }
