@@ -91,8 +91,9 @@ exports.loginUser = async (req , res) => {
                     res.cookie("token", token, {
                       domain: "stayhub-backend3.onrender.com",
                       path: "/",
-                      secure: true,
                       httpOnly: true,
+                      sameSite: 'None', 
+                      secure: true 
                     //   sameSite: "None",
                     });
 
@@ -138,7 +139,7 @@ exports.logoutUser = (req , res) => {
         
       
         const { token } = req.cookies;
-        console.log(token);
+        // console.log(token);
       // Redirect the user to the login or home page
       res.redirect("/places"); // Replace with the appropriate route
 
