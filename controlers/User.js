@@ -87,14 +87,16 @@ exports.loginUser = async (req , res) => {
                     }
                    
                     // res.cookie('token' , token).json(userLoggedIn);
+
+                    const maxAge = 3 * 60 * 60 * 1000;
                     
                     res.cookie("token", token, {
                       domain: "stayhub-backend3.onrender.com",
                       path: "/",
                       httpOnly: true,
-                      sameSite: 'None', 
-                      secure: true 
-                    //   sameSite: "None",
+                      sameSite: "None",
+                      secure: true,
+                      maxAge: maxAge,
                     });
 
                     if(token){
